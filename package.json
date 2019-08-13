@@ -1,6 +1,6 @@
 {
   "name": "nr1-funnel-component",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Reusable component for generating funnel visualizations using funnel-graph-js.",
   "main": "dist/commonjs/index.js",
   "repository": {
@@ -38,6 +38,7 @@
     "release": "standard-version"
   },
   "devDependencies": {
+    "@babel/runtime": "^7.5.5",
     "babel-core": "^6.26.0",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
