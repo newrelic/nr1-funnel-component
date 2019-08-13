@@ -1,6 +1,6 @@
 {
   "name": "nr1-funnel-component",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Reusable component for generating funnel visualizations using funnel-graph-js.",
   "main": "dist/commonjs/index.js",
   "repository": {
