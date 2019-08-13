@@ -2,7 +2,6 @@
 .idea
 .DS_Store
 .npm
-dist
 node_modules
 coverage
 tmp
