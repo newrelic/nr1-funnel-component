@@ -1,0 +1,22 @@
+{
+    "presets": ["env", "react"],
+    "plugins": ["transform-class-properties", "transform-runtime", "babel-plugin-transform-object-rest-spread"],
+    "env": {
+      "commonjs": {
+        "plugins": [
+            "transform-class-properties",
+            "transform-runtime",
+            "babel-plugin-transform-object-rest-spread",
+        ],
+        "presets": [["env", { "modules": false }], "react"]
+      },
+      "esmodules": {
+        "plugins": [
+          "transform-class-properties",
+          "transform-runtime",
+          "babel-plugin-transform-object-rest-spread"
+        ],
+        "presets": [["env", { "modules": false }], "react"]
+      }
+    }
+  }
