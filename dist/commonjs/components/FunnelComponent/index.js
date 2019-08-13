@@ -32,7 +32,7 @@ var _inherits2 = require("babel-runtime/helpers/inherits");
 
 var _inherits3 = _interopRequireDefault(_inherits2);
 
-var _templateObject = (0, _taggedTemplateLiteral3.default)(["", ""], ["", ""]);
+var _templateObject = (0, _taggedTemplateLiteral3.default)(["\n        ", "\n      "], ["\n        ", "\n      "]);
 
 var _react = require("react");
 
@@ -107,7 +107,9 @@ var FunnelComponent = function (_React$Component) {
 
       var query = this._buildGql();
       console.log("query", [_nr.NerdGraphQuery, query]); //eslint-disable-line
-      return _nr.NerdGraphQuery.query({ query: (0, _graphqlTag2.default)(_templateObject, query) }).then(function (_ref) {
+      return _nr.NerdGraphQuery.query({
+        query: (0, _graphqlTag2.default)(_templateObject, query)
+      }).then(function (_ref) {
         var data = _ref.data;
         var _props3 = _this3.props,
             series = _props3.series,
