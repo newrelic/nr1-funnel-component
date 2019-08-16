@@ -16,10 +16,9 @@ export default class FunnelComponent extends React.Component {
   static propTypes = {
     accountId: PropTypes.number.isRequired,
     launcherUrlState: PropTypes.object.isRequired,
-    measure: PropTypes.shape({
-      eventName: PropTypes.string.isRequired,
-      label: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired //what are we funneling?
+    funnel: PropTypes.shape({
+      event: PropTypes.string.isRequired,
+      measure: PropTypes.string.isRequired //what are we funneling?
     }).isRequired,
     steps: PropTypes.arrayOf(
       PropTypes.shape({
@@ -57,10 +56,10 @@ export default class FunnelComponent extends React.Component {
   }
 
   _constructFunnelNrql(series) {
-    const { measure, steps } = this.props;
+    const { funnel, steps } = this.props;
     const { duration } = this.props.launcherUrlState.timeRange;
     const since = `SINCE ${duration / 1000 / 60} MINUTES AGO`;
-    return `FROM ${measure.eventName} SELECT funnel(${measure.name} ${steps
+    return `FROM ${funnel.event} SELECT funnel(${funnel.measure} ${steps
       .map(step => `, WHERE ${step.nrql} as '${step.label}'`)
       .join(" ")}) WHERE ${series.nrql} ${since}`;
   }
@@ -68,11 +67,7 @@ export default class FunnelComponent extends React.Component {
   _getData() {
     const query = this._buildGql();
     console.log("query", [NerdGraphQuery, query]); //eslint-disable-line
-    return NerdGraphQuery.query({
-      query: gql`
-        ${query}
-      `
-    }).then(({ data }) => {
+    return NerdGraphQuery.query({ query: gql`${query}` }).then(({ data }) => {
       const { series, steps } = this.props;
       const results = {
         subLabels: series.map(s => s.label),
@@ -102,14 +97,14 @@ export default class FunnelComponent extends React.Component {
 
   shouldComponentUpdate(nextProps) {
     const next = JSON.stringify({
-      steps: nextProps.steps,
-      measure: nextProps.measure,
-      series: nextProps.series
+      funnel: nextProps.funnel,
+      series: nextProps.series,
+      steps: nextProps.steps
     });
     const current = JSON.stringify({
-      steps: this.props.steps,
-      measure: this.props.measure,
-      series: this.props.series
+      funnel: this.props.funnel,
+      series: this.props.series,
+      steps: this.props.steps
     });
     const nextRange = nextProps.launcherUrlState
       ? nextProps.launcherUrlState.timeRange.duration

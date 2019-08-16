@@ -32,7 +32,7 @@ var _inherits2 = require("babel-runtime/helpers/inherits");
 
 var _inherits3 = _interopRequireDefault(_inherits2);
 
-var _templateObject = (0, _taggedTemplateLiteral3.default)(["\n        ", "\n      "], ["\n        ", "\n      "]);
+var _templateObject = (0, _taggedTemplateLiteral3.default)(["", ""], ["", ""]);
 
 var _react = require("react");
 
@@ -91,12 +91,12 @@ var FunnelComponent = function (_React$Component) {
     key: "_constructFunnelNrql",
     value: function _constructFunnelNrql(series) {
       var _props2 = this.props,
-          measure = _props2.measure,
+          funnel = _props2.funnel,
           steps = _props2.steps;
       var duration = this.props.launcherUrlState.timeRange.duration;
 
       var since = "SINCE " + duration / 1000 / 60 + " MINUTES AGO";
-      return "FROM " + measure.eventName + " SELECT funnel(" + measure.name + " " + steps.map(function (step) {
+      return "FROM " + funnel.event + " SELECT funnel(" + funnel.measure + " " + steps.map(function (step) {
         return ", WHERE " + step.nrql + " as '" + step.label + "'";
       }).join(" ") + ") WHERE " + series.nrql + " " + since;
     }
@@ -107,9 +107,7 @@ var FunnelComponent = function (_React$Component) {
 
       var query = this._buildGql();
       console.log("query", [_nr.NerdGraphQuery, query]); //eslint-disable-line
-      return _nr.NerdGraphQuery.query({
-        query: (0, _graphqlTag2.default)(_templateObject, query)
-      }).then(function (_ref) {
+      return _nr.NerdGraphQuery.query({ query: (0, _graphqlTag2.default)(_templateObject, query) }).then(function (_ref) {
         var data = _ref.data;
         var _props3 = _this3.props,
             series = _props3.series,
@@ -149,14 +147,14 @@ var FunnelComponent = function (_React$Component) {
       var _this4 = this;
 
       var next = (0, _stringify2.default)({
-        steps: nextProps.steps,
-        measure: nextProps.measure,
-        series: nextProps.series
+        funnel: nextProps.funnel,
+        series: nextProps.series,
+        steps: nextProps.steps
       });
       var current = (0, _stringify2.default)({
-        steps: this.props.steps,
-        measure: this.props.measure,
-        series: this.props.series
+        funnel: this.props.funnel,
+        series: this.props.series,
+        steps: this.props.steps
       });
       var nextRange = nextProps.launcherUrlState ? nextProps.launcherUrlState.timeRange.duration : null;
       var currentRange = this.props.launcherUrlState ? this.props.launcherUrlState.timeRange.duration : null;
@@ -203,10 +201,9 @@ var FunnelComponent = function (_React$Component) {
 FunnelComponent.propTypes = {
   accountId: _propTypes2.default.number.isRequired,
   launcherUrlState: _propTypes2.default.object.isRequired,
-  measure: _propTypes2.default.shape({
-    eventName: _propTypes2.default.string.isRequired,
-    label: _propTypes2.default.string.isRequired,
-    name: _propTypes2.default.string.isRequired //what are we funneling?
+  funnel: _propTypes2.default.shape({
+    event: _propTypes2.default.string.isRequired,
+    measure: _propTypes2.default.string.isRequired //what are we funneling?
   }).isRequired,
   steps: _propTypes2.default.arrayOf(_propTypes2.default.shape({
     label: _propTypes2.default.string.isRequired,

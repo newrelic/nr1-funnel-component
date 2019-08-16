@@ -14,10 +14,9 @@ const testdata = {
 
 var testdata = {
   accountId: 1606862,
-  measure: {
-    eventName: "PageView",
-    label: "Edit Mode",
-    name: "session"
+  funnel: {
+    event: "PageView",
+    measure: "session"
   },
   series: [{
     label: "All Users",
