@@ -106,7 +106,7 @@ var FunnelComponent = function (_React$Component) {
       var _this3 = this;
 
       var query = this._buildGql();
-      console.log("query", [_nr.NerdGraphQuery, query]); //eslint-disable-line
+      //console.log("query", [NerdGraphQuery, query]); //eslint-disable-line
       return _nr.NerdGraphQuery.query({ query: (0, _graphqlTag2.default)(_templateObject, query) }).then(function (_ref) {
         var data = _ref.data;
         var _props3 = _this3.props,
@@ -125,7 +125,7 @@ var FunnelComponent = function (_React$Component) {
           }), //eslint-disable-line
           values: []
         };
-        console.debug(data);
+        //console.debug(data);
         series.forEach(function (s) {
           var _steps = (0, _lodash.get)(data, "actor.account." + (0, _lodash.camelCase)(s.label) + ".results[0].steps");
           if (results.values.length == 0) {

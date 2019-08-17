@@ -66,7 +66,7 @@ export default class FunnelComponent extends React.Component {
 
   _getData() {
     const query = this._buildGql();
-    console.log("query", [NerdGraphQuery, query]); //eslint-disable-line
+    //console.log("query", [NerdGraphQuery, query]); //eslint-disable-line
     return NerdGraphQuery.query({ query: gql`${query}` }).then(({ data }) => {
       const { series, steps } = this.props;
       const results = {
@@ -75,7 +75,7 @@ export default class FunnelComponent extends React.Component {
         colors: series.map(s => get_color_set()), //eslint-disable-line
         values: []
       };
-      console.debug(data);
+      //console.debug(data);
       series.forEach(s => {
         const _steps = get(
           data,
