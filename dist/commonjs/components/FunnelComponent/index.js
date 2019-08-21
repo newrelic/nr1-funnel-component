@@ -170,6 +170,10 @@ var FunnelComponent = function (_React$Component) {
     value: function componentDidMount() {
       var _this5 = this;
 
+      var _props4 = this.props,
+          height = _props4.height,
+          width = _props4.width;
+
       this._getData().then(function (data) {
         _this5.graph = new _funnelGraphJs2.default({
           container: ".funnel",
@@ -177,8 +181,8 @@ var FunnelComponent = function (_React$Component) {
           data: data,
           displayPercent: true,
           direction: "vertical",
-          width: 200,
-          height: 575,
+          width: width,
+          height: height,
           subLabelValue: "percent"
         });
 
@@ -201,6 +205,8 @@ var FunnelComponent = function (_React$Component) {
 FunnelComponent.propTypes = {
   accountId: _propTypes2.default.number.isRequired,
   launcherUrlState: _propTypes2.default.object.isRequired,
+  height: _propTypes2.default.number,
+  width: _propTypes2.default.number,
   funnel: _propTypes2.default.shape({
     event: _propTypes2.default.string.isRequired,
     measure: _propTypes2.default.string.isRequired //what are we funneling?
@@ -213,5 +219,9 @@ FunnelComponent.propTypes = {
     label: _propTypes2.default.string.isRequired,
     nrql: _propTypes2.default.string.isRequired //fragment of NRQL used ot construct the series of funnel queries
   }))
+};
+FunnelComponent.defaultProps = {
+  width: 200,
+  height: 575
 };
 exports.default = FunnelComponent;

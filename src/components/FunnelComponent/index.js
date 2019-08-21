@@ -16,6 +16,8 @@ export default class FunnelComponent extends React.Component {
   static propTypes = {
     accountId: PropTypes.number.isRequired,
     launcherUrlState: PropTypes.object.isRequired,
+    height: PropTypes.number,
+    width: PropTypes.number,
     funnel: PropTypes.shape({
       event: PropTypes.string.isRequired,
       measure: PropTypes.string.isRequired //what are we funneling?
@@ -33,6 +35,11 @@ export default class FunnelComponent extends React.Component {
       })
     )
   };
+
+  static defaultProps = {
+    width: 200,
+    height: 575
+  }
 
   constructor(props) {
     super(props);
@@ -121,6 +128,7 @@ export default class FunnelComponent extends React.Component {
   }
 
   componentDidMount() {
+    const { height, width } = this.props;
     this._getData().then(data => {
       this.graph = new FunnelGraph({
         container: ".funnel",
@@ -128,8 +136,8 @@ export default class FunnelComponent extends React.Component {
         data: data,
         displayPercent: true,
         direction: "vertical",
-        width: 200,
-        height: 575,
+        width,
+        height,
         subLabelValue: "percent"
       });
 
