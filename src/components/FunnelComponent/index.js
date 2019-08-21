@@ -119,7 +119,7 @@ export default class FunnelComponent extends React.Component {
     const currentRange = this.props.launcherUrlState
       ? this.props.launcherUrlState.timeRange.duration
       : null;
-    if (next !== current || nextRange != currentRange) {
+    if (next !== current || nextRange !== currentRange) {
       this._getData().then(data => {
         this.graph.updateData(data);
       });

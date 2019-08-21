@@ -158,7 +158,7 @@ var FunnelComponent = function (_React$Component) {
       });
       var nextRange = nextProps.launcherUrlState ? nextProps.launcherUrlState.timeRange.duration : null;
       var currentRange = this.props.launcherUrlState ? this.props.launcherUrlState.timeRange.duration : null;
-      if (next !== current || nextRange != currentRange) {
+      if (next !== current || nextRange !== currentRange) {
         this._getData().then(function (data) {
           _this4.graph.updateData(data);
         });
