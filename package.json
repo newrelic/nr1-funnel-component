@@ -1,6 +1,6 @@
 {
   "name": "nr1-funnel-component",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "Reusable component for generating funnel visualizations using funnel-graph-js.",
   "main": "dist/commonjs/index.js",
   "repository": {
@@ -15,12 +15,12 @@
     "react"
   ],
   "bugs": {
-    "email": "labs@newrelic.com"
+    "email": "opensource@newrelic.com"
   },
   "author": {
     "name": "Joel Worrall, Daniel Golden",
-    "email": "labs@newrelic.com",
-    "url": "https://source.datanerd.us/futurians"
+    "email": "opensource@newrelic.com",
+    "url": "https://github.com/newrelic/nr1-funnel-component"
   },
   "license": "Apache2",
   "scripts": {
@@ -39,6 +39,7 @@
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
+    "babel-eslint": "^10.0.3",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
@@ -49,7 +50,10 @@
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
     "eslint": "^5.9.0",
+    "eslint-config-prettier": "^6.2.0",
     "eslint-plugin-jest": "^22.7.0",
+    "eslint-plugin-prettier": "^3.1.0",
+    "eslint-plugin-react": "^7.14.3",
     "fast-sass-loader": "^1.4.1",
     "gh-pages": "^1.1.0",
     "github": "^2.6.0",

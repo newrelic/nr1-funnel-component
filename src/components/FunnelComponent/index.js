@@ -1,10 +1,10 @@
-import React from "react";
-import PropTypes from "prop-types";
-import FunnelGraph from "funnel-graph-js";
-import { get, camelCase } from "lodash";
-import gql from "graphql-tag";
-import colors from "nice-color-palettes";
-import { NerdGraphQuery } from "nr1";
+import React from 'react';
+import PropTypes from 'prop-types';
+import FunnelGraph from 'funnel-graph-js';
+import { get, camelCase } from 'lodash';
+import gql from 'graphql-tag';
+import colors from 'nice-color-palettes';
+import { NerdGraphQuery } from 'nr1';
 
 function get_color_set() {
   let num = Math.floor(Math.random() * 100);
@@ -20,26 +20,26 @@ export default class FunnelComponent extends React.Component {
     width: PropTypes.number,
     funnel: PropTypes.shape({
       event: PropTypes.string.isRequired,
-      measure: PropTypes.string.isRequired //what are we funneling?
+      measure: PropTypes.string.isRequired, //what are we funneling?
     }).isRequired,
     steps: PropTypes.arrayOf(
       PropTypes.shape({
         label: PropTypes.string.isRequired,
-        nrql: PropTypes.string.isRequired //fragment of NRQL used ot construct the series of funnel queries
+        nrqlWhere: PropTypes.string.isRequired, //fragment of NRQL used ot construct the series of funnel queries
       })
     ),
     series: PropTypes.arrayOf(
       PropTypes.shape({
         label: PropTypes.string.isRequired,
-        nrql: PropTypes.string.isRequired //fragment of NRQL used ot construct the series of funnel queries
+        nrqlWhere: PropTypes.string.isRequired, //fragment of NRQL used ot construct the series of funnel queries
       })
-    )
+    ),
   };
 
   static defaultProps = {
     width: 200,
-    height: 575
-  }
+    height: 575,
+  };
 
   constructor(props) {
     super(props);
@@ -67,20 +67,24 @@ export default class FunnelComponent extends React.Component {
     const { duration } = this.props.launcherUrlState.timeRange;
     const since = `SINCE ${duration / 1000 / 60} MINUTES AGO`;
     return `FROM ${funnel.event} SELECT funnel(${funnel.measure} ${steps
-      .map(step => `, WHERE ${step.nrql} as '${step.label}'`)
-      .join(" ")}) WHERE ${series.nrql} ${since}`;
+      .map(step => `, WHERE ${step.nrqlWhere} as '${step.label}'`)
+      .join(' ')}) WHERE ${series.nrqlWhere} ${since}`;
   }
 
   _getData() {
     const query = this._buildGql();
     //console.log("query", [NerdGraphQuery, query]); //eslint-disable-line
-    return NerdGraphQuery.query({ query: gql`${query}` }).then(({ data }) => {
+    return NerdGraphQuery.query({
+      query: gql`
+        ${query}
+      `,
+    }).then(({ data }) => {
       const { series, steps } = this.props;
       const results = {
         subLabels: series.map(s => s.label),
         labels: steps.map(step => step.label),
         colors: series.map(s => get_color_set()), //eslint-disable-line
-        values: []
+        values: [],
       };
       //console.debug(data);
       series.forEach(s => {
@@ -106,12 +110,12 @@ export default class FunnelComponent extends React.Component {
     const next = JSON.stringify({
       funnel: nextProps.funnel,
       series: nextProps.series,
-      steps: nextProps.steps
+      steps: nextProps.steps,
     });
     const current = JSON.stringify({
       funnel: this.props.funnel,
       series: this.props.series,
-      steps: this.props.steps
+      steps: this.props.steps,
     });
     const nextRange = nextProps.launcherUrlState
       ? nextProps.launcherUrlState.timeRange.duration
@@ -131,14 +135,14 @@ export default class FunnelComponent extends React.Component {
     const { height, width } = this.props;
     this._getData().then(data => {
       this.graph = new FunnelGraph({
-        container: ".funnel",
-        gradientDirection: "vertical",
+        container: '.funnel',
+        gradientDirection: 'vertical',
         data: data,
         displayPercent: true,
-        direction: "vertical",
+        direction: 'vertical',
         width,
         height,
-        subLabelValue: "percent"
+        subLabelValue: 'percent',
       });
 
       this.graph.draw();

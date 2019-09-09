@@ -97,8 +97,8 @@ var FunnelComponent = function (_React$Component) {
 
       var since = "SINCE " + duration / 1000 / 60 + " MINUTES AGO";
       return "FROM " + funnel.event + " SELECT funnel(" + funnel.measure + " " + steps.map(function (step) {
-        return ", WHERE " + step.nrql + " as '" + step.label + "'";
-      }).join(" ") + ") WHERE " + series.nrql + " " + since;
+        return ", WHERE " + step.nrqlWhere + " as '" + step.label + "'";
+      }).join(" ") + ") WHERE " + series.nrqlWhere + " " + since;
     }
   }, {
     key: "_getData",

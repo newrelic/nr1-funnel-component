@@ -1,1 +1,1 @@
-export { default as FunnelComponent } from "./components/FunnelComponent";
+export { default as FunnelComponent } from './components/FunnelComponent';
