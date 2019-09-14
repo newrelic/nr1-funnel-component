@@ -2,6 +2,8 @@
 
 NR1 component for displaying one or many NRQL funnel queries in a single visualization.
 
+![GitHub release (latest SemVer including pre-releases)](https://img.shields.io/github/v/release/newrelic/nr1-funnel-component?include_prereleases&sort=semver) ![AppVeyor](https://img.shields.io/appveyor/ci/newrelic/nr1-funnel-component) [![Snyk](https://snyk.io/test/github/newrelic/nr1-funnel-component/badge.svg)](https://snyk.io/test/github/newrelic/nr1-funnel-component)
+
 ## Usage
 
 We have two portions implement this component: a JS and CSS import.
