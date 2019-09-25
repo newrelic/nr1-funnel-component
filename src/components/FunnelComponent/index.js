@@ -1,11 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import FunnelGraph from 'funnel-graph-js';
-import { get, camelCase } from 'lodash';
-import gql from 'graphql-tag';
+import { get } from 'lodash';
 import colors from 'nice-color-palettes';
 import { NerdGraphQuery } from 'nr1';
-import uuidv4 from 'uuid';
+import randomstring from 'randomstring';
 
 function get_color_set() {
   let num = Math.floor(Math.random() * 100);
@@ -72,19 +71,19 @@ export default class FunnelComponent extends React.Component {
   }
 
   _buildQueryMap() {
-    const { steps } = this.props;
+    const { series } = this.props;
     this.queryMap = {};
-    steps.forEach(step => this.queryMap[step.label] = uuidv4());
+    series.forEach(s => this.queryMap[s.label] = randomstring.generate({
+      length: 12,
+      charset: 'alphabetic'
+    }));
   }
 
   _getData() {
+    this._buildQueryMap();
     const query = this._buildGql();
-    //console.log("query", [NerdGraphQuery, query]); //eslint-disable-line
-    return NerdGraphQuery.query({
-      query: gql`
-        ${query}
-      `,
-    }).then(({ data }) => {
+    console.log("query", [NerdGraphQuery, query]); //eslint-disable-line
+    return NerdGraphQuery.query({ query }).then(({ data }) => {
       const { series, steps } = this.props;
       const results = {
         subLabels: series.map(s => s.label),

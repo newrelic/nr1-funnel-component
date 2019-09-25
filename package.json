@@ -1,6 +1,6 @@
 {
   "name": "nr1-funnel-component",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Reusable component for generating funnel visualizations using funnel-graph-js.",
   "main": "dist/commonjs/index.js",
   "repository": {
@@ -79,12 +79,10 @@
   },
   "dependencies": {
     "funnel-graph-js": "^1.3.9",
-    "graphql": "^14.4.2",
-    "graphql-tag": "^2.10.1",
     "lodash": "^4.17.12",
     "nice-color-palettes": "^3.0.0",
-    "react": "^16.3.2",
-    "uuid": "^3.3.3"
+    "randomstring": "^1.1.5",
+    "react": "^16.3.2"
   },
   "lint-staged": {
     "**/*.scss": [

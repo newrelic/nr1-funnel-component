@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "Tue Sep 17 2019 16:50:42 GMT-0400 (Eastern Daylight Time)",
+  "lastUpdated": "Wed Sep 25 2019 12:27:36 GMT-0400 (EDT)",
   "projectName": "nr1-funnel-component",
   "projectUrl": "https://github.com/newrelic/nr1-funnel-component",
   "includeDev": true,
@@ -15,28 +15,6 @@
       "licenseUrl": "https://github.com/greghub/funnel-graph-js/blob/v1.3.9/LICENSE",
       "licenseTextSource": "file",
       "publisher": "Greg Hovanesyan"
-    },
-    "graphql-tag@2.10.1": {
-      "name": "graphql-tag",
-      "version": "2.10.1",
-      "range": "^2.10.1",
-      "licenses": "MIT",
-      "repoUrl": "https://github.com/apollostack/graphql-tag",
-      "versionedRepoUrl": "https://github.com/apollostack/graphql-tag/tree/v2.10.1",
-      "licenseFile": "node_modules/graphql-tag/LICENSE",
-      "licenseUrl": "https://github.com/apollostack/graphql-tag/blob/v2.10.1/LICENSE",
-      "licenseTextSource": "file"
-    },
-    "graphql@14.4.2": {
-      "name": "graphql",
-      "version": "14.4.2",
-      "range": "^14.4.2",
-      "licenses": "MIT",
-      "repoUrl": "https://github.com/graphql/graphql-js",
-      "versionedRepoUrl": "https://github.com/graphql/graphql-js/tree/v14.4.2",
-      "licenseFile": "node_modules/graphql/LICENSE",
-      "licenseUrl": "https://github.com/graphql/graphql-js/blob/v14.4.2/LICENSE",
-      "licenseTextSource": "file"
     },
     "lodash@4.17.12": {
       "name": "lodash",
@@ -77,6 +55,20 @@
       "publisher": "Matt DesLauriers",
       "email": "dave.des@gmail.com",
       "url": "https://github.com/mattdesl"
+    },
+    "randomstring@1.1.5": {
+      "name": "randomstring",
+      "version": "1.1.5",
+      "range": "^1.1.5",
+      "licenses": "MIT",
+      "repoUrl": "https://github.com/klughammer/node-randomstring",
+      "versionedRepoUrl": "https://github.com/klughammer/node-randomstring/tree/v1.1.5",
+      "licenseFile": "node_modules/randomstring/LICENSE",
+      "licenseUrl": "https://github.com/klughammer/node-randomstring/blob/v1.1.5/LICENSE",
+      "licenseTextSource": "file",
+      "publisher": "Elias Klughammer",
+      "email": "elias@klughammer.com",
+      "url": "http://www.klughammer.com"
     },
     "react@16.8.6": {
       "name": "react",
