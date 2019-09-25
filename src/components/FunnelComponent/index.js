@@ -5,6 +5,7 @@ import { get, camelCase } from 'lodash';
 import gql from 'graphql-tag';
 import colors from 'nice-color-palettes';
 import { NerdGraphQuery } from 'nr1';
+import uuidv4 from 'uuid';
 
 function get_color_set() {
   let num = Math.floor(Math.random() * 100);
@@ -43,6 +44,7 @@ export default class FunnelComponent extends React.Component {
 
   constructor(props) {
     super(props);
+    this.queryMap = {};
   }
 
   _buildGql() {
@@ -51,9 +53,7 @@ export default class FunnelComponent extends React.Component {
       actor {
         account(id: ${accountId}) {
           ${series.map(s => {
-            return `${camelCase(
-              s.label
-            )}:nrql(query: "${this._constructFunnelNrql(s)}") {
+            return `${this.queryMap[s.label]}:nrql(query: "${this._constructFunnelNrql(s)}") {
               results
             }`;
           })}
@@ -69,6 +69,12 @@ export default class FunnelComponent extends React.Component {
     return `FROM ${funnel.event} SELECT funnel(${funnel.measure} ${steps
       .map(step => `, WHERE ${step.nrqlWhere} as '${step.label}'`)
       .join(' ')}) WHERE ${series.nrqlWhere} ${since}`;
+  }
+
+  _buildQueryMap() {
+    const { steps } = this.props;
+    this.queryMap = {};
+    steps.forEach(step => this.queryMap[step.label] = uuidv4());
   }
 
   _getData() {
@@ -90,7 +96,7 @@ export default class FunnelComponent extends React.Component {
       series.forEach(s => {
         const _steps = get(
           data,
-          `actor.account.${camelCase(s.label)}.results[0].steps`
+          `actor.account.${this.queryMap[s.label]}.results[0].steps`
         );
         if (results.values.length == 0) {
           _steps.forEach(step => {

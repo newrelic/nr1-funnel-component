@@ -58,6 +58,10 @@ var _niceColorPalettes2 = _interopRequireDefault(_niceColorPalettes);
 
 var _nr = require('nr1');
 
+var _uuid = require('uuid');
+
+var _uuid2 = _interopRequireDefault(_uuid);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function get_color_set() {
@@ -71,7 +75,11 @@ var FunnelComponent = function (_React$Component) {
 
   function FunnelComponent(props) {
     (0, _classCallCheck3.default)(this, FunnelComponent);
-    return (0, _possibleConstructorReturn3.default)(this, (FunnelComponent.__proto__ || (0, _getPrototypeOf2.default)(FunnelComponent)).call(this, props));
+
+    var _this = (0, _possibleConstructorReturn3.default)(this, (FunnelComponent.__proto__ || (0, _getPrototypeOf2.default)(FunnelComponent)).call(this, props));
+
+    _this.queryMap = {};
+    return _this;
   }
 
   (0, _createClass3.default)(FunnelComponent, [{
@@ -84,7 +92,7 @@ var FunnelComponent = function (_React$Component) {
           series = _props.series;
 
       return '{\n      actor {\n        account(id: ' + accountId + ') {\n          ' + series.map(function (s) {
-        return (0, _lodash.camelCase)(s.label) + ':nrql(query: "' + _this2._constructFunnelNrql(s) + '") {\n              results\n            }';
+        return _this2.queryMap[s.label] + ':nrql(query: "' + _this2._constructFunnelNrql(s) + '") {\n              results\n            }';
       }) + '\n        }\n      }\n    }';
     }
   }, {
@@ -101,9 +109,21 @@ var FunnelComponent = function (_React$Component) {
       }).join(' ') + ') WHERE ' + series.nrqlWhere + ' ' + since;
     }
   }, {
+    key: '_buildQueryMap',
+    value: function _buildQueryMap() {
+      var _this3 = this;
+
+      var steps = this.props.steps;
+
+      this.queryMap = {};
+      steps.forEach(function (step) {
+        return _this3.queryMap[step.label] = (0, _uuid2.default)();
+      });
+    }
+  }, {
     key: '_getData',
     value: function _getData() {
-      var _this3 = this;
+      var _this4 = this;
 
       var query = this._buildGql();
       //console.log("query", [NerdGraphQuery, query]); //eslint-disable-line
@@ -111,7 +131,7 @@ var FunnelComponent = function (_React$Component) {
         query: (0, _graphqlTag2.default)(_templateObject, query)
       }).then(function (_ref) {
         var data = _ref.data;
-        var _props3 = _this3.props,
+        var _props3 = _this4.props,
             series = _props3.series,
             steps = _props3.steps;
 
@@ -129,7 +149,7 @@ var FunnelComponent = function (_React$Component) {
         };
         //console.debug(data);
         series.forEach(function (s) {
-          var _steps = (0, _lodash.get)(data, 'actor.account.' + (0, _lodash.camelCase)(s.label) + '.results[0].steps');
+          var _steps = (0, _lodash.get)(data, 'actor.account.' + _this4.queryMap[s.label] + '.results[0].steps');
           if (results.values.length == 0) {
             _steps.forEach(function (step) {
               results.values.push([step]);
@@ -146,7 +166,7 @@ var FunnelComponent = function (_React$Component) {
   }, {
     key: 'shouldComponentUpdate',
     value: function shouldComponentUpdate(nextProps) {
-      var _this4 = this;
+      var _this5 = this;
 
       var next = (0, _stringify2.default)({
         funnel: nextProps.funnel,
@@ -162,7 +182,7 @@ var FunnelComponent = function (_React$Component) {
       var currentRange = this.props.launcherUrlState ? this.props.launcherUrlState.timeRange.duration : null;
       if (next !== current || nextRange !== currentRange) {
         this._getData().then(function (data) {
-          _this4.graph.updateData(data);
+          _this5.graph.updateData(data);
         });
       }
       return true;
@@ -170,14 +190,14 @@ var FunnelComponent = function (_React$Component) {
   }, {
     key: 'componentDidMount',
     value: function componentDidMount() {
-      var _this5 = this;
+      var _this6 = this;
 
       var _props4 = this.props,
           height = _props4.height,
           width = _props4.width;
 
       this._getData().then(function (data) {
-        _this5.graph = new _funnelGraphJs2.default({
+        _this6.graph = new _funnelGraphJs2.default({
           container: '.funnel',
           gradientDirection: 'vertical',
           data: data,
@@ -188,16 +208,16 @@ var FunnelComponent = function (_React$Component) {
           subLabelValue: 'percent'
         });
 
-        _this5.graph.draw();
+        _this6.graph.draw();
       });
     }
   }, {
     key: 'render',
     value: function render() {
-      var _this6 = this;
+      var _this7 = this;
 
       return _react2.default.createElement('div', { className: 'funnel', ref: function ref(_ref2) {
-          return _this6._ref = _ref2;
+          return _this7._ref = _ref2;
         } });
     }
   }]);
