@@ -8,10 +8,6 @@ var _stringify = require('babel-runtime/core-js/json/stringify');
 
 var _stringify2 = _interopRequireDefault(_stringify);
 
-var _taggedTemplateLiteral2 = require('babel-runtime/helpers/taggedTemplateLiteral');
-
-var _taggedTemplateLiteral3 = _interopRequireDefault(_taggedTemplateLiteral2);
-
 var _getPrototypeOf = require('babel-runtime/core-js/object/get-prototype-of');
 
 var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
@@ -32,8 +28,6 @@ var _inherits2 = require('babel-runtime/helpers/inherits');
 
 var _inherits3 = _interopRequireDefault(_inherits2);
 
-var _templateObject = (0, _taggedTemplateLiteral3.default)(['\n        ', '\n      '], ['\n        ', '\n      ']);
-
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
@@ -48,19 +42,15 @@ var _funnelGraphJs2 = _interopRequireDefault(_funnelGraphJs);
 
 var _lodash = require('lodash');
 
-var _graphqlTag = require('graphql-tag');
-
-var _graphqlTag2 = _interopRequireDefault(_graphqlTag);
-
 var _niceColorPalettes = require('nice-color-palettes');
 
 var _niceColorPalettes2 = _interopRequireDefault(_niceColorPalettes);
 
 var _nr = require('nr1');
 
-var _uuid = require('uuid');
+var _randomstring = require('randomstring');
 
-var _uuid2 = _interopRequireDefault(_uuid);
+var _randomstring2 = _interopRequireDefault(_randomstring);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -113,11 +103,14 @@ var FunnelComponent = function (_React$Component) {
     value: function _buildQueryMap() {
       var _this3 = this;
 
-      var steps = this.props.steps;
+      var series = this.props.series;
 
       this.queryMap = {};
-      steps.forEach(function (step) {
-        return _this3.queryMap[step.label] = (0, _uuid2.default)();
+      series.forEach(function (s) {
+        return _this3.queryMap[s.label] = _randomstring2.default.generate({
+          length: 12,
+          charset: 'alphabetic'
+        });
       });
     }
   }, {
@@ -125,11 +118,10 @@ var FunnelComponent = function (_React$Component) {
     value: function _getData() {
       var _this4 = this;
 
+      this._buildQueryMap();
       var query = this._buildGql();
-      //console.log("query", [NerdGraphQuery, query]); //eslint-disable-line
-      return _nr.NerdGraphQuery.query({
-        query: (0, _graphqlTag2.default)(_templateObject, query)
-      }).then(function (_ref) {
+      console.log("query", [_nr.NerdGraphQuery, query]); //eslint-disable-line
+      return _nr.NerdGraphQuery.query({ query: query }).then(function (_ref) {
         var data = _ref.data;
         var _props3 = _this4.props,
             series = _props3.series,
