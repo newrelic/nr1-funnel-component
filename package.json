@@ -78,7 +78,7 @@
     "babel-runtime": "^6.26.0"
   },
   "dependencies": {
-    "funnel-graph-js": "^1.3.9",
+    "funnel-graph-js": "^1.4.2",
     "lodash": "^4.17.16",
     "nice-color-palettes": "^3.0.0",
     "randomstring": "^1.1.5",
